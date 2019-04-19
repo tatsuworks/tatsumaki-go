@@ -1,8 +1,9 @@
-package tatsumaki_go
+package tatsumakigo
 
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"time"
 )
@@ -22,49 +23,95 @@ func NewRestClient(token string) *restClient {
 	}
 }
 
-func (rc *restClient) User(userId string) (*User, error) {
-	// Create request.
-	req, err := http.NewRequest("GET", endpointUser(userId), nil)
+func (rc *restClient) guildLeaderboard(guildId string) ([]*GuildRankedUser, error) {
+	// Make request.
+	body, err := rc.makeGetRequest(endpointGuildLeaderboard(guildId))
 	if err != nil {
-		return nil, errorRequestFailed(err)
-	}
-
-	// Set headers.
-	rc.setHeaders(req)
-
-	// Wait for rate limit clearance.
-	rc.rateLimiter.Lock()
-	rc.rateLimiter.acquire()
-
-	// Execute request.
-	response, err := rc.httpClient.Do(req)
-
-	// Store last request time and unlock rate limiter.
-	rc.rateLimiter.lastRequest = time.Now()
-	rc.rateLimiter.Unlock()
-
-	if err != nil {
-		return nil, errorResponseFailed(err)
-	}
-
-	// Check if response was successful.
-	if response.StatusCode != 200 {
-		// Attempt to parse error JSON.
-		var tatsuErr map[string]interface{}
-		err := json.NewDecoder(response.Body).Decode(&tatsuErr)
-		if err != nil {
-			return nil, errorResponseFailed(nil)
-		}
-		return nil, errorResponseFailed(errors.New(tatsuErr["message"].(string)))
+		return nil, err
 	}
 
 	// Parse response.
-	var jsonResponse map[string]interface{}
-	err = json.NewDecoder(response.Body).Decode(&jsonResponse)
+	var guildLeaderboard []*GuildRankedUser
+	err = json.NewDecoder(body).Decode(&guildLeaderboard)
 
 	// Check if there was an error decoding.
 	if err != nil {
-		return nil, errorResponseFailed(err)
+		return nil, errorParseFailed(err)
+	}
+
+	// Iterate over the array and remove the null elements received from the response.
+	// Once we find the first null element, we simply cut the array at that index.
+	for i, v := range guildLeaderboard {
+		if v == nil {
+			guildLeaderboard = guildLeaderboard[:i]
+			break
+		}
+	}
+
+	return guildLeaderboard, nil
+}
+
+func (rc *restClient) guildUserStats(guildId string, userId string) (*GuildUserStats, error) {
+	// Make request.
+	body, err := rc.makeGetRequest(endpointGuildLeaderboard(guildId))
+	if err != nil {
+		return nil, err
+	}
+
+	// Defer closing body.
+	defer body.Close()
+
+	// Parse response.
+	var guildUserStats GuildUserStats
+	err = json.NewDecoder(body).Decode(&guildUserStats)
+
+	// Check if there was an error decoding.
+	if err != nil {
+		return nil, errorParseFailed(err)
+	}
+
+	return &guildUserStats, nil
+}
+
+func (rc *restClient) ping() (*Ping, error) {
+	// Make request.
+	body, err := rc.makeGetRequest(endpointPing())
+	if err != nil {
+		return nil, err
+	}
+
+	// Defer closing body.
+	defer body.Close()
+
+	// Parse response.
+	var ping Ping
+	err = json.NewDecoder(body).Decode(&ping)
+
+	// Check if there was an error decoding.
+	if err != nil {
+		return nil, errorParseFailed(err)
+	}
+
+	return &ping, nil
+}
+
+func (rc *restClient) user(userId string) (*User, error) {
+	// Make request.
+	body, err := rc.makeGetRequest(endpointUser(userId))
+	if err != nil {
+		return nil, err
+	}
+
+	// Defer closing body.
+	defer body.Close()
+
+	// Parse response.
+	var jsonResponse map[string]interface{}
+	err = json.NewDecoder(body).Decode(&jsonResponse)
+
+	// Check if there was an error decoding.
+	if err != nil {
+		return nil, errorParseFailed(err)
 	}
 
 	// Extract JSON.
@@ -105,6 +152,45 @@ func (rc *restClient) User(userId string) (*User, error) {
 	user.TotalXp = int64(jsonResponse["total_xp"].(float64))
 
 	return &user, nil
+}
+
+func (rc *restClient) makeGetRequest(endpoint string) (io.ReadCloser, error) {
+	// Create request.
+	req, err := http.NewRequest("GET", endpoint, nil)
+	if err != nil {
+		return nil, errorRequestFailed(err)
+	}
+
+	// Set headers.
+	rc.setHeaders(req)
+
+	// Wait for rate limit clearance.
+	rc.rateLimiter.Lock()
+	rc.rateLimiter.acquire()
+
+	// Execute request.
+	response, err := rc.httpClient.Do(req)
+
+	// Store last request time and unlock rate limiter.
+	rc.rateLimiter.lastRequest = time.Now()
+	rc.rateLimiter.Unlock()
+
+	if err != nil {
+		return nil, errorResponseFailed(err)
+	}
+
+	// Check if response was successful.
+	if response.StatusCode != 200 {
+		// Attempt to parse error JSON.
+		var tatsuErr map[string]interface{}
+		err := json.NewDecoder(response.Body).Decode(&tatsuErr)
+		if err != nil {
+			return nil, errorResponseFailed(nil)
+		}
+		return nil, errorResponseFailed(errors.New(tatsuErr["message"].(string)))
+	}
+
+	return response.Body, nil
 }
 
 func (rc *restClient) setHeaders(r *http.Request) {
