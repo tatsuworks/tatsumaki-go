@@ -14,7 +14,7 @@ type restClient struct {
 	rateLimiter *rateLimiter
 }
 
-func NewRestClient(token string) *restClient {
+func newRestClient(token string) *restClient {
 	// Create rest client.
 	return &restClient{
 		token,

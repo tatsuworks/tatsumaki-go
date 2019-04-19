@@ -8,7 +8,7 @@ type TatsumakiClient struct {
 // New creates a new instance of the Tatsumaki client.
 func New(token string) *TatsumakiClient {
 	return &TatsumakiClient{
-		NewRestClient(token),
+		newRestClient(token),
 	}
 }
 
