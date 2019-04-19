@@ -1,4 +1,4 @@
-package tatsumakigo
+package tatsumaki_go
 
 const (
 	endpointBaseUrl = "https://api.tatsumaki.xyz/"
