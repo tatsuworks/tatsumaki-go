@@ -4,7 +4,7 @@ package tatsumakigo
 type GuildRankedUser struct {
 	Rank   int64  `json:"rank"`
 	Score  int64  `json:"score,string"`
-	UserID string `json:"user_id"`
+	UserId string `json:"user_id"`
 }
 
 // GuildUserPoints is the struct for a user's adjusted points in a guild.
@@ -19,10 +19,10 @@ type GuildUserScore struct {
 
 // GuildUserStats is the struct for a user's stats in a guild.
 type GuildUserStats struct {
-	GuildID string `json:"guild_id"`
+	GuildId string `json:"guild_id"`
 	Points  int64  `json:"points,string"`
 	Score   int64  `json:"score,string"`
-	UserID  int64  `json:"user_id,string"`
+	UserId  int64  `json:"user_id,string"`
 }
 
 // Ping is the struct for a ping response.
@@ -47,13 +47,13 @@ type User struct {
 
 // Background is the struct for a profile background.
 type Background struct {
-	ImageUrl string
+	ImageURL string
 	Name     string
 }
 
 // Badge is the struct for a profile badge.
 type Badge struct {
-	ImageUrl string
+	ImageURL string
 	Name     string
 }
 
@@ -64,7 +64,7 @@ type BadgeSlot struct {
 	SlotNo int
 }
 
-// LevelProgress is the struct for a user's current XP progress.
+// LevelProgress is the struct for a user's current level progress.
 type LevelProgress struct {
 	CurrentXp  int64
 	RequiredXp int64
