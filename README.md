@@ -1,7 +1,7 @@
-# tatsumaki-go
+# Tatsumaki Go
 A Go wrapper for Tatsumaki's API, one of the most popular bots on Discord.
 
-The current version is 1.0.0-release.
+The current version is 1.0.0.
 
 ## Tutorial
 
