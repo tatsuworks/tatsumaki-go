@@ -7,6 +7,16 @@ type GuildRankedUser struct {
 	UserID string `json:"user_id"`
 }
 
+// GuildUserPoints is the struct for a user's adjusted points in a guild.
+type GuildUserPoints struct {
+	Points int64 `json:"points,string"`
+}
+
+// GuildUserScore is the struct for a user's adjusted score in a guild.
+type GuildUserScore struct {
+	Score int64 `json:"score,string"`
+}
+
 // GuildUserStats is the struct for a user's stats in a guild.
 type GuildUserStats struct {
 	GuildID string `json:"guild_id"`
@@ -58,6 +68,18 @@ type BadgeSlot struct {
 type LevelProgress struct {
 	CurrentXp  int64
 	RequiredXp int64
+}
+
+// AdjustGuildUserPoints is the struct for the request body to adjust a user's points in a guild.
+type adjustGuildUserPoints struct {
+	amount int    `json:"amount"`
+	action string `json:"action"`
+}
+
+// adjustGuildUserScore is the struct for the request body to adjust a user's score in a guild.
+type adjustGuildUserScore struct {
+	amount int    `json:"amount"`
+	score  string `json:"score"`
 }
 
 // TatsumakiError is the struct for a Tatsumaki API error JSON
