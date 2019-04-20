@@ -19,7 +19,7 @@ user, err := tatsumakiClient.User("User ID")
 
 if err == nil {
 	// Do stuff with the user response here.
-	fmt.Println("User's required XP until next level up: user.LevelProgress.RequiredXp)
+	fmt.Println("User's required XP until next level up: ", user.LevelProgress.RequiredXp)
 }
 ```
 
