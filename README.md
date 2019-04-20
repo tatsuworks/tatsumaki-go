@@ -1,7 +1,7 @@
 # tatsumaki-go
 A Go wrapper for Tatsumaki's API, one of the most popular bots on Discord.
 
-The API wrapper currently has all GET endpoints implemented.
+The current version is 1.0.0-release.
 
 ## Tutorial
 
@@ -17,10 +17,9 @@ tatsumakiClient = tatsumakigo.New("YOUR API TOKEN")
 // Get a user.
 user, err := tatsumakiClient.User("User ID")
 
-if err != nil {
-	// Handle error if required.
-} else {
-	// Do stuff with the user response.
+if err == nil {
+	// Do stuff with the user response here.
+	fmt.Println("User's required XP until next level up: user.LevelProgress.RequiredXp)
 }
 ```
 
