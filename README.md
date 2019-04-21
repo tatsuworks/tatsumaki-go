@@ -12,7 +12,7 @@ Then, call your desired endpoint methods on the client.
 
 ```go
 // Create client.
-tatsumakiClient = tatsumakigo.New("YOUR API TOKEN")
+tatsumakiClient := tatsumakigo.New("YOUR API TOKEN")
 
 // Get a user.
 user, err := tatsumakiClient.User("User ID")
