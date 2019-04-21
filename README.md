@@ -3,9 +3,13 @@ A Go wrapper for Tatsumaki's API, one of the most popular bots on Discord.
 
 The current version is 1.0.1.
 
-## Tutorial
+If you have any queries about the bot or the API, please visit https://tatsumaki.xyz/
 
-First, create an instance of the Tatsumaki client which will be
+## How do I get an API key
+To get an API key, run the following command with Tatsumaki in a server: **t!apikey**
+
+## Tutorial
+To use the lib, first create an instance of the Tatsumaki client which will be 
 your interface to interact with the API.
 
 Then, call your desired endpoint methods on the client.
