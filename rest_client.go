@@ -207,6 +207,7 @@ func (rc *restClient) user(userId string) (*User, error) {
 	}
 	user.Credits = int64(jsonResponse["credits"].(float64))
 	user.InfoBox = jsonResponse["info_box"].(string)
+	user.Level = int64(jsonResponse["level"].(float64))
 	levelProgress := jsonResponse["xp"].([]interface{})
 	user.LevelProgress = &LevelProgress{
 		int64(levelProgress[0].(float64)),
@@ -256,7 +257,7 @@ func (rc *restClient) makeGetRequest(endpoint string) (io.ReadCloser, error) {
 			return nil, errorResponseFailed(nil)
 		}
 		res.Body.Close()
-		return nil, errorResponseFailed(errors.New(tatsuErr.message))
+		return nil, errorResponseFailed(errors.New(tatsuErr.Message))
 	}
 
 	return res.Body, nil
@@ -304,7 +305,7 @@ func (rc *restClient) makePutRequest(endpoint string, body interface{}) (io.Read
 			return nil, errorResponseFailed(nil)
 		}
 		res.Body.Close()
-		return nil, errorResponseFailed(errors.New(tatsuErr.message))
+		return nil, errorResponseFailed(errors.New(tatsuErr.Message))
 	}
 
 	return res.Body, nil

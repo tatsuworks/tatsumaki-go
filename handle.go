@@ -37,6 +37,7 @@ type User struct {
 	BadgeSlots    []*BadgeSlot
 	Credits       int64
 	InfoBox       string
+	Level         int64
 	LevelProgress *LevelProgress
 	Name          string
 	Rank          int64
@@ -72,17 +73,17 @@ type LevelProgress struct {
 
 // AdjustGuildUserPoints is the struct for the request body to adjust a user's points in a guild.
 type adjustGuildUserPoints struct {
-	amount int    `json:"amount"`
-	action string `json:"action"`
+	Amount int    `json:"amount"`
+	Action string `json:"action"`
 }
 
 // adjustGuildUserScore is the struct for the request body to adjust a user's score in a guild.
 type adjustGuildUserScore struct {
-	amount int    `json:"amount"`
-	score  string `json:"score"`
+	Amount int    `json:"amount"`
+	Score  string `json:"score"`
 }
 
 // TatsumakiError is the struct for a Tatsumaki API error JSON
 type tatsumakiError struct {
-	message string `json:"message"`
+	Message string `json:"message"`
 }
