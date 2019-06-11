@@ -1,7 +1,7 @@
 # Tatsumaki Go [![Documentation](https://godoc.org/github.com/hassieswift621/tatsumaki-go?status.svg)](http://godoc.org/github.com/hassieswift621/tatsumaki-go)
 A Go wrapper for Tatsumaki's API, one of the most popular bots on Discord.
 
-The current version is 1.0.1.
+The current version is 1.0.2.
 
 If you have any queries about the bot or the API, please visit https://tatsumaki.xyz/
 
