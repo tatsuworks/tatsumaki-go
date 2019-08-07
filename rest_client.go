@@ -26,7 +26,7 @@ func newRestClient(token string) *restClient {
 	}
 }
 
-func (rc *restClient) adjustGuildUserPoints(guildId string, userId string, amount int, action Action) (*GuildUserPoints, error) {
+func (rc *restClient) adjustGuildUserPoints(guildID string, userID string, amount int, action Action) (*GuildUserPoints, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
 		return nil, errorAdjustInvalid()
@@ -38,7 +38,7 @@ func (rc *restClient) adjustGuildUserPoints(guildId string, userId string, amoun
 	}
 
 	// Make request.
-	body, err := rc.makePutRequest(putGuildUserPoints(guildId, userId),
+	body, err := rc.makePutRequest(putGuildUserPoints(guildID, userID),
 		adjustGuildUserPoints{amount, string(action)})
 	if err != nil {
 		return nil, err
@@ -57,7 +57,7 @@ func (rc *restClient) adjustGuildUserPoints(guildId string, userId string, amoun
 	return &guildUserPoints, nil
 }
 
-func (rc *restClient) adjustGuildUserScore(guildId string, userId string, amount int, action Action) (*GuildUserScore, error) {
+func (rc *restClient) adjustGuildUserScore(guildID string, userID string, amount int, action Action) (*GuildUserScore, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
 		return nil, errorAdjustInvalid()
@@ -69,7 +69,7 @@ func (rc *restClient) adjustGuildUserScore(guildId string, userId string, amount
 	}
 
 	// Make request.
-	body, err := rc.makePutRequest(putGuildUserScore(guildId, userId),
+	body, err := rc.makePutRequest(putGuildUserScore(guildID, userID),
 		adjustGuildUserScore{amount, string(action)})
 	if err != nil {
 		return nil, err
@@ -88,9 +88,9 @@ func (rc *restClient) adjustGuildUserScore(guildId string, userId string, amount
 	return &guildUserScore, nil
 }
 
-func (rc *restClient) guildLeaderboard(guildId string) ([]*GuildRankedUser, error) {
+func (rc *restClient) guildLeaderboard(guildID string) ([]*GuildRankedUser, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointGuildLeaderboard(guildId))
+	body, err := rc.makeGetRequest(endpointGuildLeaderboard(guildID))
 	if err != nil {
 		return nil, err
 	}
@@ -119,9 +119,9 @@ func (rc *restClient) guildLeaderboard(guildId string) ([]*GuildRankedUser, erro
 	return guildLeaderboard, nil
 }
 
-func (rc *restClient) guildUserStats(guildId string, userId string) (*GuildUserStats, error) {
+func (rc *restClient) guildUserStats(guildID string, userID string) (*GuildUserStats, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointGuildUserStats(guildId, userId))
+	body, err := rc.makeGetRequest(endpointGuildUserStats(guildID, userID))
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +163,9 @@ func (rc *restClient) ping() (*Ping, error) {
 	return &ping, nil
 }
 
-func (rc *restClient) user(userId string) (*User, error) {
+func (rc *restClient) user(userID string) (*User, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointUser(userId))
+	body, err := rc.makeGetRequest(endpointUser(userID))
 	if err != nil {
 		return nil, err
 	}

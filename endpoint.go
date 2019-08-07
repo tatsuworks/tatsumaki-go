@@ -15,26 +15,26 @@ func endpointBadgeImage(name string) string {
 	return "https://www.tatsumaki.xyz/images/badges/" + name + ".png"
 }
 
-func endpointGuildLeaderboard(guildId string) string {
-	return endpointBaseUrl + endpointGuilds + guildId + "/leaderboard"
+func endpointGuildLeaderboard(guildID string) string {
+	return endpointBaseUrl + endpointGuilds + guildID + "/leaderboard"
 }
 
-func endpointGuildUserStats(guildId string, userId string) string {
-	return endpointBaseUrl + endpointGuilds + guildId + "/members/" + userId + "/stats"
+func endpointGuildUserStats(guildID string, userID string) string {
+	return endpointBaseUrl + endpointGuilds + guildID + "/members/" + userID + "/stats"
 }
 
 func endpointPing() string {
 	return endpointBaseUrl + "ping"
 }
 
-func endpointUser(userId string) string {
-	return endpointBaseUrl + endpointUsers + userId
+func endpointUser(userID string) string {
+	return endpointBaseUrl + endpointUsers + userID
 }
 
-func putGuildUserPoints(guildId string, userId string) string {
-	return endpointBaseUrl + endpointGuilds + guildId + "/members" + userId + "/points"
+func putGuildUserPoints(guildID string, userID string) string {
+	return endpointBaseUrl + endpointGuilds + guildID + "/members" + userID + "/points"
 }
 
-func putGuildUserScore(guildId string, userId string) string {
-	return endpointBaseUrl + endpointGuilds + guildId + "/members" + userId + "/score"
+func putGuildUserScore(guildID string, userID string) string {
+	return endpointBaseUrl + endpointGuilds + guildID + "/members" + userID + "/score"
 }

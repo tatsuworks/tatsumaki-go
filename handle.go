@@ -4,7 +4,7 @@ package tatsumakigo
 type GuildRankedUser struct {
 	Rank   int64  `json:"rank"`
 	Score  int64  `json:"score,string"`
-	UserId string `json:"user_id"`
+	UserID string `json:"user_id"`
 }
 
 // GuildUserPoints is the struct for a user's adjusted points in a guild.
@@ -19,10 +19,10 @@ type GuildUserScore struct {
 
 // GuildUserStats is the struct for a user's stats in a guild.
 type GuildUserStats struct {
-	GuildId string `json:"guild_id"`
+	GuildID string `json:"guild_id"`
 	Points  int64  `json:"points,string"`
 	Score   int64  `json:"score,string"`
-	UserId  int64  `json:"user_id,string"`
+	UserID  int64  `json:"user_id,string"`
 }
 
 // Ping is the struct for a ping response.
