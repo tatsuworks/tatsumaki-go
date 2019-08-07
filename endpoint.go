@@ -1,7 +1,7 @@
 package tatsumakigo
 
 const (
-	endpointBaseUrl = "https://api.tatsumaki.xyz/"
+	endpointBaseURL = "https://api.tatsumaki.xyz/"
 
 	endpointGuilds = "guilds/"
 	endpointUsers  = "users/"
@@ -16,25 +16,25 @@ func endpointBadgeImage(name string) string {
 }
 
 func endpointGuildLeaderboard(guildID string) string {
-	return endpointBaseUrl + endpointGuilds + guildID + "/leaderboard"
+	return endpointBaseURL + endpointGuilds + guildID + "/leaderboard"
 }
 
 func endpointGuildUserStats(guildID string, userID string) string {
-	return endpointBaseUrl + endpointGuilds + guildID + "/members/" + userID + "/stats"
+	return endpointBaseURL + endpointGuilds + guildID + "/members/" + userID + "/stats"
 }
 
 func endpointPing() string {
-	return endpointBaseUrl + "ping"
+	return endpointBaseURL + "ping"
 }
 
 func endpointUser(userID string) string {
-	return endpointBaseUrl + endpointUsers + userID
+	return endpointBaseURL + endpointUsers + userID
 }
 
 func putGuildUserPoints(guildID string, userID string) string {
-	return endpointBaseUrl + endpointGuilds + guildID + "/members" + userID + "/points"
+	return endpointBaseURL + endpointGuilds + guildID + "/members" + userID + "/points"
 }
 
 func putGuildUserScore(guildID string, userID string) string {
-	return endpointBaseUrl + endpointGuilds + guildID + "/members" + userID + "/score"
+	return endpointBaseURL + endpointGuilds + guildID + "/members" + userID + "/score"
 }
