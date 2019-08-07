@@ -3,10 +3,11 @@ package tatsumakigo
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"io"
 	"net/http"
 	"time"
+
+	"golang.org/x/xerrors"
 )
 
 // RestClient is the low level client which handles the requests.
@@ -257,7 +258,7 @@ func (rc *restClient) makeGetRequest(endpoint string) (io.ReadCloser, error) {
 			return nil, errorResponseFailed(nil)
 		}
 		res.Body.Close()
-		return nil, errorResponseFailed(errors.New(tatsuErr.Message))
+		return nil, errorResponseFailed(xerrors.New(tatsuErr.Message))
 	}
 
 	return res.Body, nil
@@ -305,7 +306,7 @@ func (rc *restClient) makePutRequest(endpoint string, body interface{}) (io.Read
 			return nil, errorResponseFailed(nil)
 		}
 		res.Body.Close()
-		return nil, errorResponseFailed(errors.New(tatsuErr.Message))
+		return nil, errorResponseFailed(xerrors.New(tatsuErr.Message))
 	}
 
 	return res.Body, nil
