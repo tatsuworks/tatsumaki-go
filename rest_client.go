@@ -316,5 +316,5 @@ func (rc *restClient) setHeaders(r *http.Request) {
 	r.Header.Set("Accept", "application/json")
 	r.Header.Set("Authorization", rc.token)
 	r.Header.Set("Content-Type", "application/json")
-	r.Header.Set("User-Agent", "Tatsumaki Go/1.0.0-release (Hassie, https://github.com/hassieswift621/tatsumaki-go")
+	r.Header.Set("User-Agent", "Tatsumaki Go/1.0.0-release (Hassie, https://github.com/hassieswift621/tatsumaki-go)")
 }
