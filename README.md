@@ -1,4 +1,8 @@
-# Tatsumaki Go [![Documentation](https://godoc.org/github.com/hassieswift621/tatsumaki-go?status.svg)](http://godoc.org/github.com/hassieswift621/tatsumaki-go)
+# Tatsumaki Go 
+[![CircleCI](https://img.shields.io/circleci/build/github/hassieswift621/tatsumaki-go/master?logo=circleci&style=flat-square&token=ef3f8f3985ba716ddabea3c9599f19ccd7307a55)](https://circleci.com/gh/hassieswift621/tatsumaki-go)
+[![Code Quality](https://img.shields.io/codacy/grade/444a66fab315470a98dc427bf0e6ef4f?logo=codacy&style=flat-square)](https://www.codacy.com/manual/hassieswift621/tatsumaki-go?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hassieswift621/tatsumaki-go&amp;utm_campaign=Badge_Grade)
+[![Documentation](https://img.shields.io/badge/godoc-reference-blue?style=flat-square)](http://godoc.org/github.com/hassieswift621/tatsumaki-go)
+
 A Go wrapper for Tatsumaki's API, one of the most popular bots on Discord.
 
 The current version is 1.1.0.
