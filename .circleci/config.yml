@@ -5,7 +5,7 @@ orbs:
 
 jobs:
   build:
-    executor: default
+    executor: go/default
     steps:
       - checkout
       - go/load-cache
