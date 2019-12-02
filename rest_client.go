@@ -2,6 +2,7 @@ package tatsumakigo
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -26,7 +27,8 @@ func newRestClient(token string) *restClient {
 	}
 }
 
-func (rc *restClient) adjustGuildUserPoints(guildID string, userID string, amount int, action Action) (*GuildUserPoints, error) {
+func (rc *restClient) adjustGuildUserPoints(ctx context.Context, guildID string, userID string, amount int,
+	action Action) (*GuildUserPoints, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
 		return nil, errorAdjustInvalid()
@@ -38,7 +40,7 @@ func (rc *restClient) adjustGuildUserPoints(guildID string, userID string, amoun
 	}
 
 	// Make request.
-	body, err := rc.makePutRequest(putGuildUserPoints(guildID, userID),
+	body, err := rc.makePutRequest(ctx, putGuildUserPoints(guildID, userID),
 		adjustGuildUserPoints{amount, string(action)})
 	if err != nil {
 		return nil, err
@@ -57,7 +59,8 @@ func (rc *restClient) adjustGuildUserPoints(guildID string, userID string, amoun
 	return &guildUserPoints, nil
 }
 
-func (rc *restClient) adjustGuildUserScore(guildID string, userID string, amount int, action Action) (*GuildUserScore, error) {
+func (rc *restClient) adjustGuildUserScore(ctx context.Context, guildID string, userID string, amount int,
+	action Action) (*GuildUserScore, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
 		return nil, errorAdjustInvalid()
@@ -69,7 +72,7 @@ func (rc *restClient) adjustGuildUserScore(guildID string, userID string, amount
 	}
 
 	// Make request.
-	body, err := rc.makePutRequest(putGuildUserScore(guildID, userID),
+	body, err := rc.makePutRequest(ctx, putGuildUserScore(guildID, userID),
 		adjustGuildUserScore{amount, string(action)})
 	if err != nil {
 		return nil, err
@@ -88,9 +91,9 @@ func (rc *restClient) adjustGuildUserScore(guildID string, userID string, amount
 	return &guildUserScore, nil
 }
 
-func (rc *restClient) guildLeaderboard(guildID string) ([]*GuildRankedUser, error) {
+func (rc *restClient) guildLeaderboard(ctx context.Context, guildID string) ([]*GuildRankedUser, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointGuildLeaderboard(guildID))
+	body, err := rc.makeGetRequest(ctx, endpointGuildLeaderboard(guildID))
 	if err != nil {
 		return nil, err
 	}
@@ -119,9 +122,9 @@ func (rc *restClient) guildLeaderboard(guildID string) ([]*GuildRankedUser, erro
 	return guildLeaderboard, nil
 }
 
-func (rc *restClient) guildUserStats(guildID string, userID string) (*GuildUserStats, error) {
+func (rc *restClient) guildUserStats(ctx context.Context, guildID string, userID string) (*GuildUserStats, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointGuildUserStats(guildID, userID))
+	body, err := rc.makeGetRequest(ctx, endpointGuildUserStats(guildID, userID))
 	if err != nil {
 		return nil, err
 	}
@@ -141,9 +144,9 @@ func (rc *restClient) guildUserStats(guildID string, userID string) (*GuildUserS
 	return &guildUserStats, nil
 }
 
-func (rc *restClient) ping() (*Ping, error) {
+func (rc *restClient) ping(ctx context.Context) (*Ping, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointPing())
+	body, err := rc.makeGetRequest(ctx, endpointPing())
 	if err != nil {
 		return nil, err
 	}
@@ -163,9 +166,9 @@ func (rc *restClient) ping() (*Ping, error) {
 	return &ping, nil
 }
 
-func (rc *restClient) user(userID string) (*User, error) {
+func (rc *restClient) user(ctx context.Context, userID string) (*User, error) {
 	// Make request.
-	body, err := rc.makeGetRequest(endpointUser(userID))
+	body, err := rc.makeGetRequest(ctx, endpointUser(userID))
 	if err != nil {
 		return nil, err
 	}
@@ -224,9 +227,9 @@ func (rc *restClient) user(userID string) (*User, error) {
 }
 
 // MakeGetRequest makes a GET request to the API.
-func (rc *restClient) makeGetRequest(endpoint string) (io.ReadCloser, error) {
+func (rc *restClient) makeGetRequest(ctx context.Context, endpoint string) (io.ReadCloser, error) {
 	// Create request.
-	req, err := http.NewRequest("GET", endpoint, nil)
+	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
 	if err != nil {
 		return nil, errorRequestFailed(err)
 	}
@@ -265,7 +268,7 @@ func (rc *restClient) makeGetRequest(endpoint string) (io.ReadCloser, error) {
 }
 
 // MakePutRequest makes a PUT request to the API.
-func (rc *restClient) makePutRequest(endpoint string, body interface{}) (io.ReadCloser, error) {
+func (rc *restClient) makePutRequest(ctx context.Context, endpoint string, body interface{}) (io.ReadCloser, error) {
 	// Encode body into JSON.
 	encoded, err := json.Marshal(&body)
 	if err != nil {
@@ -273,7 +276,7 @@ func (rc *restClient) makePutRequest(endpoint string, body interface{}) (io.Read
 	}
 
 	// Create request.
-	req, err := http.NewRequest("PUT", endpoint, bytes.NewBuffer(encoded))
+	req, err := http.NewRequestWithContext(ctx, "PUT", endpoint, bytes.NewBuffer(encoded))
 	if err != nil {
 		return nil, errorRequestFailed(err)
 	}
