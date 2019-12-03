@@ -6,7 +6,7 @@ import (
 )
 
 // RateLimiter is the Tatsumaki API rate limiter.
-// THE API allows 1 request every 0.2s.
+// The API allows 1 request every 0.2s.
 type rateLimiter struct {
 	lastRequest   time.Time
 	resetInterval time.Duration
