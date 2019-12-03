@@ -31,12 +31,12 @@ func (rc *restClient) adjustGuildUserPoints(ctx context.Context, guildID string,
 	action Action) (*GuildUserPoints, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
-		return nil, errorAdjustInvalid()
+		return nil, ErrAdjustInvalid
 	}
 
 	// Check if amount is between 0 and 50,000 (inclusive).
 	if amount < 0 || amount > 50000 {
-		return nil, errorAdjustBounds()
+		return nil, ErrAdjustBounds
 	}
 
 	// Make request.
@@ -63,12 +63,12 @@ func (rc *restClient) adjustGuildUserScore(ctx context.Context, guildID string, 
 	action Action) (*GuildUserScore, error) {
 	// Check if amount is 0 and action is add or remove.
 	if amount == 0 && (action == ActionAdd || action == ActionRemove) {
-		return nil, errorAdjustInvalid()
+		return nil, ErrAdjustInvalid
 	}
 
 	// Check if amount is between 0 and 50,000 (inclusive).
 	if amount < 0 || amount > 50000 {
-		return nil, errorAdjustBounds()
+		return nil, ErrAdjustBounds
 	}
 
 	// Make request.
