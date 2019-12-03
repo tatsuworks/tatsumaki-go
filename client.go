@@ -65,7 +65,7 @@ func (t *Client) User(userID string) (*User, error) {
 	return t.UserWithContext(context.Background(), userID)
 }
 
-// User gets a Tatsumaki user profile.
+// UserWithContext gets a Tatsumaki user profile.
 func (t *Client) UserWithContext(ctx context.Context, userID string) (*User, error) {
 	return t.restClient.user(ctx, userID)
 }
