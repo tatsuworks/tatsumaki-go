@@ -19,7 +19,8 @@ func endpointBadgeImage(name string) string {
 
 func endpointGuildLeaderboard(guildID string, limit int) string {
 	if limit != 0 {
-		return endpointBaseURL + endpointGuilds + guildID + "/leaderboard?" + strconv.FormatInt(int64(limit), 10)
+		return endpointBaseURL + endpointGuilds + guildID + "/leaderboard?limit=" +
+			strconv.FormatInt(int64(limit), 10)
 	}
 
 	return endpointBaseURL + endpointGuilds + guildID + "/leaderboard"
