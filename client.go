@@ -40,13 +40,17 @@ func (t *Client) AdjustGuildUserScoreWithContext(ctx context.Context, guildID st
 }
 
 // GuildLeaderboard wraps GuildLeaderboardWithContext using the background context.
-func (t *Client) GuildLeaderboard(guildID string) ([]*GuildRankedUser, error) {
-	return t.GuildLeaderboardWithContext(context.Background(), guildID)
+// To get all guild member rankings for the leaderboard, set limit to -1.
+// If limit is set to 0, the default value will be used as per the API.
+func (t *Client) GuildLeaderboard(guildID string, limit int) ([]*GuildRankedUser, error) {
+	return t.GuildLeaderboardWithContext(context.Background(), guildID, limit)
 }
 
 // GuildLeaderboardWithContext gets the leaderboard for a guild.
-func (t *Client) GuildLeaderboardWithContext(ctx context.Context, guildID string) ([]*GuildRankedUser, error) {
-	return t.restClient.guildLeaderboard(ctx, guildID)
+// To get all guild member rankings for the leaderboard, set limit to -1.
+// If limit is set to 0, the default value will be used as per the API.
+func (t *Client) GuildLeaderboardWithContext(ctx context.Context, guildID string, limit int) ([]*GuildRankedUser, error) {
+	return t.restClient.guildLeaderboard(ctx, guildID, limit)
 }
 
 // GuildUserStats wraps GuildUserStatsWithContext using the background context.

@@ -1,5 +1,7 @@
 package tatsumakigo
 
+import "strconv"
+
 const (
 	endpointBaseURL = "https://api.tatsumaki.xyz/"
 
@@ -15,7 +17,11 @@ func endpointBadgeImage(name string) string {
 	return "https://www.tatsumaki.xyz/images/badges/" + name + ".png"
 }
 
-func endpointGuildLeaderboard(guildID string) string {
+func endpointGuildLeaderboard(guildID string, limit int) string {
+	if limit != 0 {
+		return endpointBaseURL + endpointGuilds + guildID + "/leaderboard?" + strconv.FormatInt(int64(limit), 10)
+	}
+
 	return endpointBaseURL + endpointGuilds + guildID + "/leaderboard"
 }
 

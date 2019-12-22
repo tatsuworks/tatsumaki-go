@@ -91,9 +91,14 @@ func (rc *restClient) adjustGuildUserScore(ctx context.Context, guildID string, 
 	return &guildUserScore, nil
 }
 
-func (rc *restClient) guildLeaderboard(ctx context.Context, guildID string) ([]*GuildRankedUser, error) {
+func (rc *restClient) guildLeaderboard(ctx context.Context, guildID string, limit int) ([]*GuildRankedUser, error) {
+	// Check if the limit is valid.
+	if limit < -1 {
+		return nil, ErrLeaderboardLimit
+	}
+
 	// Make request.
-	body, err := rc.makeGetRequest(ctx, endpointGuildLeaderboard(guildID))
+	body, err := rc.makeGetRequest(ctx, endpointGuildLeaderboard(guildID, limit))
 	if err != nil {
 		return nil, err
 	}

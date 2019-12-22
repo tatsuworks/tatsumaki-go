@@ -11,6 +11,8 @@ var ErrAdjustBounds = xerrors.New("tatsumakigo: the amount to adjust must be bet
 // for an action is invalid.
 var ErrAdjustInvalid = xerrors.New("tatsumakigo: the amount to adjust for add and remove actions must be above 0")
 
+var ErrLeaderboardLimit = xerrors.New("tatsumakigo: the limit cannot be less than -1")
+
 func errorRequestFailed(err error) error {
 	return xerrors.Errorf("tatsumakigo: failed to create request: %w", err)
 }
