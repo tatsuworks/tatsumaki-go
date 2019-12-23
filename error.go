@@ -11,6 +11,7 @@ var ErrAdjustBounds = xerrors.New("tatsumakigo: the amount to adjust must be bet
 // for an action is invalid.
 var ErrAdjustInvalid = xerrors.New("tatsumakigo: the amount to adjust for add and remove actions must be above 0")
 
+// ErrLeaderboardLimit is returned by the guild leaderboard endpoint if the limit is not valid.
 var ErrLeaderboardLimit = xerrors.New("tatsumakigo: guild leaderboard limit cannot be less than -1")
 
 func errorRequestFailed(err error) error {
