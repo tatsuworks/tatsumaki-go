@@ -1,4 +1,4 @@
-module github.com/hassieswift621/tatsumaki-go
+module github.com/tatsuworks/tatsumaki-go
 
 go 1.13
 
